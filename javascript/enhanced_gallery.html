@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambience Suites Enhanced Gallery - YouTube Gallery UI/UX</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="enhanced_gallery.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">🎬 Ambience Suites Enhanced Gallery</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <button class="mdl-button mdl-js-button mdl-button--icon" id="menu-button">
+                        <i class="material-icons">menu</i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Sidebar Menu -->
+        <div class="mdl-layout__drawer" id="sidebar">
+            <span class="mdl-layout-title">Menu</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="#" onclick="showSection('gallery')">
+                    <i class="material-icons">video_library</i> Gallery
+                </a>
+                <a class="mdl-navigation__link" href="#" onclick="showSection('active-list')">
+                    <i class="material-icons">bookmark</i> Active List
+                </a>
+                <a class="mdl-navigation__link" href="#" onclick="showSection('presets')">
+                    <i class="material-icons">settings</i> Presets
+                </a>
+                <a class="mdl-navigation__link" href="#" onclick="showSection('watch-party')">
+                    <i class="material-icons">group</i> Watch Party
+                </a>
+                <a class="mdl-navigation__link" href="#" onclick="showSection('support')">
+                    <i class="material-icons">favorite</i> Support Publisher
+                </a>
+            </nav>
+        </div>
+
+        <main class="mdl-layout__content">
+            <!-- AI Prompt Section -->
+            <div class="ai-prompt-section">
+                <div class="ai-prompt-header">
+                    <h2>🤖 Ambience Suites Enhanced Gallery</h2>
+                    <p>AI-Powered YouTube Gallery with Advanced Features</p>
+                </div>
+                <div class="ai-features">
+                    <div class="feature-badge">Search Assist</div>
+                    <div class="feature-badge">Video Tagging</div>
+                    <div class="feature-badge">Active List</div>
+                    <div class="feature-badge">Presets</div>
+                    <div class="feature-badge">Load/Download Library</div>
+                    <div class="feature-badge">Watch Party</div>
+                    <div class="feature-badge">Support Publisher</div>
+                </div>
+            </div>
+
+            <!-- Search Assist Feature -->
+            <div class="search-assist-container">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input search-input" type="text" id="search-query" 
+                           placeholder="Search videos with AI assistance...">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                            onclick="performSearch()">
+                        <i class="material-icons">search</i> Search
+                    </button>
+                </div>
+                <div id="search-suggestions" class="suggestions-dropdown"></div>
+            </div>
+
+            <!-- Main Gallery Section -->
+            <div id="gallery-section" class="content-section active">
+                <div class="gallery-controls">
+                    <button class="mdl-button mdl-js-button mdl-button--raised" 
+                            onclick="showLibraryDialog()">
+                        <i class="material-icons">download</i> Load/Download Library
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised" 
+                            onclick="sortGallery()">
+                        <i class="material-icons">sort</i> Sort
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised" 
+                            onclick="filterGallery()">
+                        <i class="material-icons">filter_list</i> Filter by Tags
+                    </button>
+                </div>
+
+                <div class="gallery-grid" id="video-gallery">
+                    <!-- Video cards will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Active List Section (Bookmarks) -->
+            <div id="active-list-section" class="content-section">
+                <h3>📑 Active List - Your Bookmarked Videos</h3>
+                <div class="active-list-container" id="active-list">
+                    <p class="empty-state">No bookmarked videos yet. Add videos from the gallery!</p>
+                </div>
+            </div>
+
+            <!-- Presets Section -->
+            <div id="presets-section" class="content-section">
+                <h3>⚙️ Presets - Your Preferences</h3>
+                <div class="presets-container">
+                    <div class="preset-card">
+                        <h4>Video Quality</h4>
+                        <select id="quality-preset" class="mdl-textfield__input">
+                            <option value="auto">Auto</option>
+                            <option value="hd1080">1080p</option>
+                            <option value="hd720">720p</option>
+                            <option value="large">480p</option>
+                            <option value="medium">360p</option>
+                        </select>
+                    </div>
+                    <div class="preset-card">
+                        <h4>Autoplay</h4>
+                        <label class="mdl-switch mdl-js-switch" for="autoplay-preset">
+                            <input type="checkbox" id="autoplay-preset" class="mdl-switch__input">
+                        </label>
+                    </div>
+                    <div class="preset-card">
+                        <h4>Default Volume</h4>
+                        <input type="range" id="volume-preset" min="0" max="100" value="50">
+                        <span id="volume-value">50%</span>
+                    </div>
+                    <div class="preset-card">
+                        <h4>Theme</h4>
+                        <select id="theme-preset" class="mdl-textfield__input">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                            onclick="savePresets()">
+                        Save Presets
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised" 
+                            onclick="loadPresets()">
+                        Load Presets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Watch Party Section -->
+            <div id="watch-party-section" class="content-section">
+                <h3>👥 Watch Party - Collaborative Viewing</h3>
+                <div class="watch-party-container">
+                    <div class="watch-party-create">
+                        <h4>Create Watch Party</h4>
+                        <input type="text" id="party-name" placeholder="Party Name" 
+                               class="mdl-textfield__input">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                                onclick="createWatchParty()">
+                            Create Party
+                        </button>
+                    </div>
+                    <div class="watch-party-join">
+                        <h4>Join Watch Party</h4>
+                        <input type="text" id="party-code" placeholder="Enter Party Code" 
+                               class="mdl-textfield__input">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                                onclick="joinWatchParty()">
+                            Join Party
+                        </button>
+                    </div>
+                    <div id="active-party" class="active-party-info">
+                        <p>No active watch party</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Publisher Section -->
+            <div id="support-section" class="content-section">
+                <h3>❤️ Support Publisher</h3>
+                <div class="support-container">
+                    <div class="support-info">
+                        <p>Show appreciation to content creators by supporting them directly!</p>
+                    </div>
+                    <div class="publisher-list" id="publisher-list">
+                        <!-- Publisher cards will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Video Detail Dialog -->
+    <dialog class="mdl-dialog" id="video-dialog">
+        <h4 class="mdl-dialog__title" id="dialog-title">Video Details</h4>
+        <div class="mdl-dialog__content" id="dialog-content">
+            <div id="video-player-container"></div>
+            <div class="video-info">
+                <h5>Tags</h5>
+                <div id="video-tags" class="tags-container"></div>
+                <div class="tag-input-container">
+                    <input type="text" id="new-tag" placeholder="Add custom tag" 
+                           class="mdl-textfield__input">
+                    <button class="mdl-button mdl-js-button mdl-button--raised" 
+                            onclick="addTag()">
+                        Add Tag
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                    onclick="addToActiveList()">
+                <i class="material-icons">bookmark</i> Bookmark
+            </button>
+            <button type="button" class="mdl-button close" onclick="closeDialog()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Library Dialog -->
+    <dialog class="mdl-dialog" id="library-dialog">
+        <h4 class="mdl-dialog__title">Load/Download Library</h4>
+        <div class="mdl-dialog__content">
+            <div class="library-actions">
+                <div class="library-section">
+                    <h5>Download Library</h5>
+                    <p>Export your current library (bookmarks, tags, and presets)</p>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                            onclick="downloadLibrary()">
+                        <i class="material-icons">download</i> Download as JSON
+                    </button>
+                </div>
+                <div class="library-section">
+                    <h5>Load Library</h5>
+                    <p>Import a previously saved library</p>
+                    <input type="file" id="library-file" accept=".json" style="display:none" 
+                           onchange="loadLibrary(this)">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+                            onclick="document.getElementById('library-file').click()">
+                        <i class="material-icons">upload</i> Load from JSON
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close" onclick="closeLibraryDialog()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="enhanced_gallery.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
